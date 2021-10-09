@@ -408,13 +408,13 @@ class VKPhotos
 
 															echo "<tr".($jj==1 ? " class='alternate'": $jj=0).">
 															<td class='vkp_td vkp_td_h'>".$countAlbums."</td>
-															<td class='vkp_td'><a target='_blank' href='http://vk.com/album".($this->vkpAccaunts_type[$i]=='group' ? "-":"").$this->vkpAccaunts[$i]."_".$value['aid']."'><b>".$value['title']."</b></a><br>
+															<td class='vkp_td'><a target='_blank' href='http://vk.com/album".($this->vkpAccaunts_type[$i]=='group' ? "-":"").$this->vkpAccaunts[$i]."_".$value['id']."'><b>".$value['title']."</b></a><br>
 															".$value['description']."
 															</td>
 															<td>".date("d.m.Y", $value['created'])."</td>
 															<td>".date("d.m.Y", $value['updated'])."</td>
 															<td class='vkp_td_h'>".$value['size']."</td>
-															<td class='vkp_td_h'>".($this->vkpCalculateCache=='yes' ? round(($this->dir_size($this->dirForCache.($this->vkpAccaunts_type[$i]=='group' ? "-":"").$this->vkpAccaunts[$i]."/".$value['aid'])/1024/1024),2):"")."</td>
+															<td class='vkp_td_h'>".($this->vkpCalculateCache=='yes' ? round(($this->dir_size($this->dirForCache.($this->vkpAccaunts_type[$i]=='group' ? "-":"").$this->vkpAccaunts[$i]."/".$value['id'])/1024/1024),2):"")."</td>
 															<td><nobr>[vkalbum owner='".$value['owner_id']."' id='".$value['id']."']</nobr></td>
 															</tr>";
 

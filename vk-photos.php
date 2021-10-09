@@ -43,40 +43,36 @@ add_action('template_redirect', 'vkp_next_page');
 
 //////////////////////////////////////////////////////////
 // поиcк ближайшей картинки
-function get_photo_size($size,$value){
-		$arrayPictureSizeDESC = array ('5' => 'photo_2560', '4' => 'photo_1280','3' => 'photo_807','2' => 'photo_604','1' => 'photo_130','0' => 'photo_75');
-				$_key_photo = array_search($size, $arrayPictureSizeDESC );   // от этого ключа и ниже будем искать ближайшую годную миниатюру
-				foreach ($arrayPictureSizeDESC as $mkey => $mvalue) {
-						if($mkey<=$_key_photo){
-								// проверим есть ли картинка
-								if(isset($value[$mvalue])){
-										// если есть картинка - покидаем цикл по массиву
-										return $mvalue;
-								}
-						}
-				}
-				return false;
+function get_photo_size($size, $value)
+{
+	foreach ($value['sizes'] as $skey => $svalue) {
+		if ($size == $svalue['type']) {
+			return $skey;
+		}
+	}
+	return false;
 }
 
 // перевод размеров старого api в новое
 
-function trPictureSize($oldsize){
-		$arSizes = array(
-				'src_small' => 'photo_75', 
-				'src' => 'photo_130',
-				'src_big' => 'photo_604',
-				'src_xbig' => 'photo_807',
-				'src_xxbig' => 'photo_1280',
-				'src_xxxbig' => 'photo_2560',
-				'photo_75' => 'photo_75', 
-				'photo_130' => 'photo_130',
-				'photo_604' => 'photo_604',
-				'photo_807' => 'photo_807',
-				'photo_1280' => 'photo_1280',
-				'photo_2560' => 'photo_2560',						 
-			);
+function trPictureSize($oldsize)
+{
+	$arSizes = array(
+		'src_small' => 's',
+		'src' => 'm',
+		'src_big' => 'x',
+		'src_xbig' => 'y',
+		'src_xxbig' => 'z',
+		'src_xxxbig' => 'w',
+		'photo_75' => 's',
+		'photo_130' => 'm',
+		'photo_604' => 'x',
+		'photo_807' => 'y',
+		'photo_1280' => 'z',
+		'photo_2560' => 'w',
+	);
 
-		return $arSizes[$oldsize];
+	return $arSizes[$oldsize];
 }
 
 ////////////////////////////////////////////////////////////////////

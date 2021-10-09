@@ -44,7 +44,7 @@ $acces_token = get_option('vkpAccessToken');
             $photos = unserialize($photos);
         }
         if($from == 'vk'){
-            $photos = $VKP->api('photos.get', array('album_id'=>$id,'owner_id'=>$owner, 'access_token'=>$acces_token));
+            $photos = $VKP->api('photos.get', array('album_id'=>$id,'owner_id'=>$owner, 'access_token'=>$acces_token, 'offset'=>($page-1)*$count, 'count'=>$count));
         }
 		
 
@@ -65,15 +65,15 @@ $acces_token = get_option('vkpAccessToken');
 
 			$allCount = count($photos['response']['items']);
 
-			$photos = array_slice($photos['response']['items'],(($page-1)*$count),$count);
+			$photos = array_slice($photos['response']['items'], (($page - 1) * $count), $count);
 
                 foreach ($photos as $key => $value) {
 
-                        $_vkpPreviewSize = get_photo_size($vkpPreviewSize,$value);
-                        $_vkpPhotoViewSize = get_photo_size($vkpPhotoViewSize,$value);
+                    $_vkpPreviewSize = get_photo_size(trPictureSize($vkpPreviewSize), $value);
+                    $_vkpPhotoViewSize = get_photo_size(trPictureSize($vkpPhotoViewSize), $value);
 
 
-                        if($_vkpPreviewSize!=false and $_vkpPhotoViewSize!=false){
+                        if($_vkpPreviewSize!==false and $_vkpPhotoViewSize!==false){
 
                             if($from=='cache'){
                                 $filenamePreview                = "thumb_".$value['id'].".".pathinfo($value[$_vkpPreviewSize], PATHINFO_EXTENSION);
@@ -99,8 +99,8 @@ $acces_token = get_option('vkpAccessToken');
                                         $_smallPhoto = $value[$_vkpPreviewSize];
                                     }
                             }else{
-                                $_bigPhoto = $value[$_vkpPhotoViewSize];
-                                $_smallPhoto = $value[$_vkpPreviewSize];
+                                $_bigPhoto = $value['sizes'][$_vkpPhotoViewSize]['url'];
+                                $_smallPhoto = $value['sizes'][$_vkpPreviewSize]['url'];
                             }
 
 
@@ -109,7 +109,7 @@ $acces_token = get_option('vkpAccessToken');
 
                                 // data-title="My caption" - подпись для lightbox
 
-                                $output_temp = str_replace('[[PHOTO]]', $_bigPhoto, $templateItem );
+                                $output_temp = str_replace('[[PHOTO]]', $_bigPhoto, $templateItem);
 
                                 if($sign=='yes'){
                                     $output_temp = str_replace('[[SIGNATURES]]', strip_tags($value['text']) , $output_temp);

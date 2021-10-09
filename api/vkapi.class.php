@@ -21,7 +21,7 @@ class vkapi {
 	function api($method,$params=false) {
 		if (!$params) $params = array(); 
 
-			$params["v"] =  "5.75";
+			$params["v"] =  "5.131";
 
 			ksort($params);
 			$sig = '';
