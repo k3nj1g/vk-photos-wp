@@ -43,6 +43,7 @@ $acces_token = get_option('vkpAccessToken');
             $photos = @file_get_contents($albumCache);
             $photos = unserialize($photos);
         }
+
         if($from == 'vk'){
             $photos = $VKP->api('photos.get', array('album_id'=>$id,'owner_id'=>$owner, 'access_token'=>$acces_token, 'offset'=>($page-1)*$count, 'count'=>$count));
         }
